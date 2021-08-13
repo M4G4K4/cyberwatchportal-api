@@ -1,7 +1,9 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require('../config/Connection');
 
-const Files = sequelize.define('Files', {
+const Study = require('./Study');
+
+const File = sequelize.define('File', {
     id:{
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -13,7 +15,11 @@ const Files = sequelize.define('Files', {
     },
     study_id:{
         type: DataTypes.INTEGER,
-        allowNull: false
+        allowNull: false,
+        references: {
+            model: Study, // 'Movies' would also work
+            key: 'id'
+        }
     }
 }, {
     tableName: 'files',
@@ -21,4 +27,6 @@ const Files = sequelize.define('Files', {
     underscored: true
 });
 
-module.exports = Files;
+File.belongsTo(Study);
+
+module.exports = File;

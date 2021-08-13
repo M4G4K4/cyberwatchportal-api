@@ -1,7 +1,10 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require('../config/Connection');
 
-const Users = sequelize.define('User', {
+const Login = require('./Login');
+const Study = require('./Study');
+
+const User = sequelize.define('User', {
     id:{
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -57,4 +60,7 @@ const Users = sequelize.define('User', {
     underscored: true
 });
 
-module.exports = Users;
+User.hasMany(Login);
+User.hasMany(Study);
+
+module.exports = User;

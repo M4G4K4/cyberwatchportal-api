@@ -1,18 +1,3 @@
-Create TABLE study (
-    id INT NOT NULL,
-    title varchar(255) NOT NULL,
-    description TEXT NOT NULL,
-    long_description TEXT,
-    picture TEXT,
-    theme varchar(255) NOT NULL,
-    user_id INT NOT NULL,
-    created_at TIMESTAMP,
-    updated_at TIMESTAMP,
-    constraint study_pk primary key (id),
-    constraint study_user_fk foreign key (user_id) REFERENCES users(id),
-);
-
-
 CREATE TABLE users (
     id INT NOT NULL,
     first_name varchar(255) NOT NULL,
@@ -29,6 +14,20 @@ CREATE TABLE users (
     created_at TIMESTAMP,
     updated_at TIMESTAMP,
     constraint users_pk primary key(id)
+);
+
+CREATE TABLE study (
+    id INT NOT NULL,
+    title varchar(255) NOT NULL,
+    description TEXT NOT NULL,
+    long_description TEXT,
+    picture TEXT,
+    theme varchar(255) NOT NULL,
+    user_id INT NOT NULL,
+    created_at TIMESTAMP,
+    updated_at TIMESTAMP,
+    constraint study_pk primary key (id),
+    constraint study_user_fk foreign key (user_id) REFERENCES users(id)
 );
 
 CREATE TABLE login (
@@ -50,7 +49,7 @@ CREATE TABLE files (
     updated_at TIMESTAMP,
     constraint files_pk primary key(id),
     constraint files_study_fk foreign key(study_id) REFERENCES study(id)
-)
+);
 
 CREATE TABLE graphs (
     id INT NOT NULL,

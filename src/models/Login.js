@@ -1,6 +1,8 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require('../config/Connection');
 
+const User = require('./User');
+
 const Login = sequelize.define('Login', {
     id:{
         type: DataTypes.INTEGER,
@@ -17,12 +19,18 @@ const Login = sequelize.define('Login', {
     },
     user_id:{
         type: DataTypes.INTEGER,
-        allowNull: false
+        allowNull: false,
+        references: {
+            model: User, // 'Movies' would also work
+            key: 'id'
+        }
     }
 }, {
     tableName: 'login',
     timestamps: true,
     underscored: true
 });
+
+Login.belongsTo(User);
 
 module.exports = Login;

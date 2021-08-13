@@ -1,6 +1,10 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require('../config/Connection');
 
+const User = require('./User');
+const File = require('./File');
+const Graph = require('./Graph');
+
 const Study = sequelize.define('Study', {
     id:{
         type: DataTypes.INTEGER,
@@ -29,12 +33,20 @@ const Study = sequelize.define('Study', {
     },
     user_id:{
         type: DataTypes.INTEGER,
-        allowNull: false
+        allowNull: false,
+        references: {
+            model: User,
+            key: 'id'
+        }
     }
 }, {
     tableName: 'study',
     timestamps: true,
     underscored: true
 });
+
+Study.belongsTo(User);
+Study.hasMany(File);
+Study.hasMany(Graph);
 
 module.exports = Study;
