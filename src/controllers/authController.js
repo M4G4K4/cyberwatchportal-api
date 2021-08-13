@@ -7,4 +7,8 @@ router.get('/cenas', async (req, res, next) => {
     res.send(await authService.heelo(req, res, next));
 })
 
+router.get('/test', async (req, res, next) => {
+    res.send('Test');
+})
+
 module.exports = router;
