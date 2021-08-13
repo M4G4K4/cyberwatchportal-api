@@ -55,9 +55,9 @@ const User = sequelize.define('User', {
         allowNull: true
     }
 }, {
-    tableName: 'users',
-    timestamps: true,
-    underscored: true
+  tableName: 'users',
+  timestamps: true,
+  underscored: true
 });
 
 User.hasMany(Login);

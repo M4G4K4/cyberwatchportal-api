@@ -3,7 +3,7 @@ async function hello(req, res, next) {
 }
 
 async function nice() {
-    return 'Pedro'
+    return 'Pedro';
 }
 
 module.exports = {
