@@ -23,6 +23,13 @@ npm run dev
 This command will use nodemon to start the server, 
 will listen to files changes to restart the server
 
+## Tests
+
+Run tests
+
+```
+npm run dev
+```
 
 ## API Documentation
 
