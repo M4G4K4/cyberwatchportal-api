@@ -9,7 +9,7 @@
     "dev": "nodemon index.js",
     "coverage": "jest --collectCoverage --",
     "lint": "eslint .",
-    "lin:fix": "eslint --fix",
+    "lint:fix": "eslint . --fix",
     "ci:lint": "eslint .",
     "ci:test": "jest --ci"
   },
