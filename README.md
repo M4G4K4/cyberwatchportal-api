@@ -28,7 +28,13 @@ will listen to files changes to restart the server
 Run tests
 
 ```
-npm run dev
+npm run test
+```
+
+See test code coverage
+
+```
+npm run coverage
 ```
 
 ## API Documentation
