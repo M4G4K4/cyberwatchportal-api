@@ -1,7 +1,7 @@
 name: CI
 on: [push]
 jobs:
-  eslint:
+  checks:
     name: Tests
     runs-on: ubuntu-latest
 
