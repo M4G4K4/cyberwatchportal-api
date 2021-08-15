@@ -50,10 +50,14 @@ const User = sequelize.define('User', {
   status: {
     type: DataTypes.STRING,
     allowNull: true,
+    values: ['active', 'inactive', 'banned'],
+    defaultValue: 'active'
   },
   verified: {
     type: DataTypes.STRING,
     allowNull: true,
+    values: ['verified', 'unverified'],
+    defaultValue: 'verified'
   },
 }, {
   tableName: 'users',

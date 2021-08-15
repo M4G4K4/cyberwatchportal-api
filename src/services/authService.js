@@ -2,6 +2,7 @@ const createError = require('http-errors');
 const { signToken, signRefreshToken } = require('../helpers/jwt/jwt_helper');
 const authMapper = require('../mapper/AuthMapper');
 const User = require('../models/User');
+const Login = require('../models/Login');
 const bcrypt = require('bcrypt');
 
 
@@ -48,7 +49,16 @@ async function login(loginDTO){
   return authMapper.userLoginRead(user, accessToken, refreshToken);
 }
 
+async function saveLoginInfo(userId, ip, userAgent){
+    const result = await Login.create({
+      user_id:userId,
+      ip: ip,
+      user_agent: userAgent
+    });
+}
+
 module.exports = {
   register,
-  login
+  login,
+  saveLoginInfo
 };

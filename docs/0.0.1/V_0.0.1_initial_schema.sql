@@ -17,7 +17,7 @@ CREATE TABLE users (
 );
 
 CREATE TABLE study (
-    id INT NOT NULL,
+    id SERIAL NOT NULL,
     title varchar(255) NOT NULL,
     description TEXT NOT NULL,
     long_description TEXT,
@@ -31,7 +31,7 @@ CREATE TABLE study (
 );
 
 CREATE TABLE login (
-    id INT NOT NULL,
+    id SERIAL NOT NULL,
     user_id INT NOT NULL,
     ip varchar(255),
     user_agent TEXT,
@@ -42,7 +42,7 @@ CREATE TABLE login (
 );
 
 CREATE TABLE files (
-    id INT NOT NULL,
+    id SERIAL NOT NULL,
     name varchar(255) NOT null,
     study_id int NOT NULL,
     created_at TIMESTAMP,
@@ -52,7 +52,7 @@ CREATE TABLE files (
 );
 
 CREATE TABLE graphs (
-    id INT NOT NULL,
+    id SERIAL NOT NULL,
     name varchar(255),
     type varchar(255) NOT NULL,
     data json NOT NULL,

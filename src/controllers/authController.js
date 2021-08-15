@@ -23,6 +23,8 @@ router.post('/login', async (req, res, next) => {
 
         const result = await authService.login(loginDTO);
 
+        await authService.saveLoginInfo(result.user.id, req.ip, req.get('User-Agent'));
+
         res.send(result);
     }catch (error){
         if(error.isJoi === true){
