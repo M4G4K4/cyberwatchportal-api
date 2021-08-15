@@ -1,22 +1,20 @@
 const router = require('express').Router();
 const authService = require('../services/authService');
+const { authRegisterSchema } = require('../utils/validation/authValidation');
 
-// TODO: middlware used in here should have the req.userId added in the previous middlware
+router.post('/register', async (req, res, next) => {
+    try{
+        const registerDTO = await authRegisterSchema.validateAsync(req.body);
 
-router.get('/cenas', async (req, res, next) => {
-  res.send(await authService.hello(req, res, next));
-});
+        const result = await authService.register(registerDTO);
 
-router.get('/coisas', async (req, res) => {
-  res.send(await authService.nice());
-});
-
-router.get('/test', async (req, res) => {
-  const data = {
-    user: 'pedro',
-    email: 'pedro@gmail.com',
-  };
-  res.send(data);
+        res.send(result);
+    }catch (error){
+        if(error.isJoi === true){
+            error.status = 422;
+        }
+        next(error)
+    }
 });
 
 module.exports = router;

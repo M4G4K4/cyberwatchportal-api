@@ -1,5 +1,5 @@
 CREATE TABLE users (
-    id INT NOT NULL,
+    id SERIAL NOT NULL,
     first_name varchar(255) NOT NULL,
     last_name varchar(255) NOT NULL,
     username varchar(255) NOT NULL,
@@ -7,7 +7,7 @@ CREATE TABLE users (
     email varchar(255) NOT NULL,
     password TEXT NOT NULL,
     role varchar(255) NOT NULL,
-    requests varchar(255) NOT NULL,
+    requests INT NOT NULL,
     permissions TEXT,
     status varchar(255),
     verified varchar(255),

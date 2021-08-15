@@ -1,5 +1,5 @@
 const { DataTypes } = require('sequelize');
-const sequelize = require('../config/Connection');
+const sequelize = require('../config/databaseConnection');
 
 const Study = require('./Study');
 
@@ -7,7 +7,7 @@ const File = sequelize.define('File', {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
-    allowNull: false,
+    autoIncrement: true
   },
   name: {
     type: DataTypes.STRING,
@@ -26,7 +26,5 @@ const File = sequelize.define('File', {
   timestamps: true,
   underscored: true,
 });
-
-File.belongsTo(Study);
 
 module.exports = File;

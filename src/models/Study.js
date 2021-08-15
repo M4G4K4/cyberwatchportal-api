@@ -1,15 +1,13 @@
 const { DataTypes } = require('sequelize');
-const sequelize = require('../config/Connection');
+const sequelize = require('../config/databaseConnection');
 
 const User = require('./User');
-const File = require('./File');
-const Graph = require('./Graph');
 
 const Study = sequelize.define('Study', {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
-    allowNull: false,
+    autoIncrement: true
   },
   title: {
     type: DataTypes.STRING,
@@ -44,9 +42,5 @@ const Study = sequelize.define('Study', {
   timestamps: true,
   underscored: true,
 });
-
-Study.belongsTo(User);
-Study.hasMany(File);
-Study.hasMany(Graph);
 
 module.exports = Study;

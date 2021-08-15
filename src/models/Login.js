@@ -1,5 +1,5 @@
 const { DataTypes } = require('sequelize');
-const sequelize = require('../config/Connection');
+const sequelize = require('../config/databaseConnection');
 
 const User = require('./User');
 
@@ -7,7 +7,7 @@ const Login = sequelize.define('Login', {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
-    allowNull: false,
+    autoIncrement: true
   },
   ip: {
     type: DataTypes.STRING,
@@ -30,7 +30,5 @@ const Login = sequelize.define('Login', {
   timestamps: true,
   underscored: true,
 });
-
-Login.belongsTo(User);
 
 module.exports = Login;
