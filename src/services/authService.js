@@ -1,7 +1,9 @@
 const createError = require('http-errors');
 const { signToken, signRefreshToken } = require('../helpers/jwt/jwt_helper');
-const AuthMapper = require('../mapper/AuthMapper');
+const authMapper = require('../mapper/AuthMapper');
 const User = require('../models/User');
+const bcrypt = require('bcrypt');
+
 
 async function register (registerDTO){
     const user = await User.findOne({
@@ -18,14 +20,35 @@ async function register (registerDTO){
     }
   }
 
-    const createdUser = await User.create(registerDTO);
+  await User.create(registerDTO);
 
-    const accessToken = await signToken(createdUser.dataValues.id);
-    const refreshToken = await signRefreshToken(createdUser.dataValues.id);
+  return {};
+}
 
-   return AuthMapper.userRegisterToRead(accessToken, refreshToken);
+async function login(loginDTO){
+  const user = await User.findOne({
+    where:{
+      email: loginDTO.email
+    }
+  });
+
+  if(!user){
+    throw createError.Unauthorized('Invalid credentials');
+  }
+
+  const equalPassword = bcrypt.compare(loginDTO.password, user.dataValues.password);
+
+  if(!equalPassword){
+    throw createError.Unauthorized('Invalid credentials');
+  }
+
+  const accessToken = await signToken(user.dataValues.id);
+  const refreshToken = await signRefreshToken(user.dataValues.id);
+
+  return authMapper.userLoginRead(user, accessToken, refreshToken);
 }
 
 module.exports = {
-  register
+  register,
+  login
 };
