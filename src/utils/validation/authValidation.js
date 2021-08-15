@@ -8,6 +8,13 @@ const authRegisterSchema = Joi.object({
     password: Joi.string().min(8).required(),
 });
 
+const authLoginSchema = Joi.object({
+    email: Joi.string().email().required(),
+    password: Joi.string().min(8).required(),
+});
+
+
 module.exports = {
-    authRegisterSchema
+    authRegisterSchema,
+    authLoginSchema
 }
