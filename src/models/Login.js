@@ -1,8 +1,6 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/databaseConnection');
 
-const User = require('./User');
-
 const Login = sequelize.define('Login', {
   id: {
     type: DataTypes.INTEGER,
@@ -13,17 +11,21 @@ const Login = sequelize.define('Login', {
     type: DataTypes.STRING,
     allowNull: true,
   },
+  email: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
   user_agent: {
     type: DataTypes.TEXT,
     allowNull: true,
   },
+  status: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
   user_id: {
     type: DataTypes.INTEGER,
-    allowNull: false,
-    references: {
-      model: User, // 'Movies' would also work
-      key: 'id',
-    },
+    allowNull: true,
   },
 }, {
   tableName: 'login',

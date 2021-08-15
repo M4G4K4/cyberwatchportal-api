@@ -32,13 +32,14 @@ CREATE TABLE study (
 
 CREATE TABLE login (
     id SERIAL NOT NULL,
-    user_id INT NOT NULL,
+    user_id INT NULL,
     ip varchar(255),
+    email varchar(255),
     user_agent TEXT,
+    status varchar(255),
     created_at TIMESTAMP,
     updated_at TIMESTAMP,
-    constraint login_pk primary key(id),
-    constraint login_users_fk foreign key (user_id) REFERENCES users(id)
+    constraint login_pk primary key(id)
 );
 
 CREATE TABLE files (
