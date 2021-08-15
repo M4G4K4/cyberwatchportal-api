@@ -21,7 +21,7 @@ router.post('/login', async (req, res, next) => {
     try{
         const loginDTO = await authLoginSchema.validateAsync(req.body);
 
-        const result = await authService.login(loginDTO);
+        const result = await authService.login(loginDTO, req.ip, req.get('User-Agent'));
 
         res.send(result);
     }catch (error){

@@ -4,10 +4,6 @@ const Study = require('./Study');
 const File = require('./File');
 const Graph = require('./Graph');
 
-
-User.hasMany(Login);
-Login.belongsTo(User);
-
 User.hasMany(Study);
 Study.belongsTo(User);
 
