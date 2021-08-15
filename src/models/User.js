@@ -1,14 +1,11 @@
 const { DataTypes } = require('sequelize');
-const sequelize = require('../config/Connection');
-
-const Login = require('./Login');
-const Study = require('./Study');
+const sequelize = require('../config/databaseConnection');
 
 const User = sequelize.define('User', {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
-    allowNull: false,
+    autoIncrement: true
   },
   first_name: {
     type: DataTypes.STRING,
@@ -37,10 +34,13 @@ const User = sequelize.define('User', {
   role: {
     type: DataTypes.STRING,
     allowNull: false,
+    values: ['user', 'admin', 'academic'],
+    defaultValue: 'user',
   },
   requests: {
-    type: DataTypes.STRING,
+    type: DataTypes.INTEGER,
     allowNull: false,
+    defaultValue: 25
   },
   permissions: {
     type: DataTypes.TEXT,
@@ -59,8 +59,5 @@ const User = sequelize.define('User', {
   timestamps: true,
   underscored: true,
 });
-
-User.hasMany(Login);
-User.hasMany(Study);
 
 module.exports = User;

@@ -1,5 +1,5 @@
 const { DataTypes } = require('sequelize');
-const sequelize = require('../config/Connection');
+const sequelize = require('../config/databaseConnection');
 
 const Study = require('./Study');
 
@@ -7,7 +7,7 @@ const Graph = sequelize.define('Graph', {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
-    allowNull: false,
+    autoIncrement: true
   },
   name: {
     type: DataTypes.STRING,
@@ -34,7 +34,5 @@ const Graph = sequelize.define('Graph', {
   timestamps: true,
   underscored: true,
 });
-
-Graph.belongsTo(Study);
 
 module.exports = Graph;
