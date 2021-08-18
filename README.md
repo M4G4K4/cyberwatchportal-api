@@ -1,6 +1,6 @@
 # Cyber Watch Portal API
 
-
+API that contains all business logic ofthe cyber watch portal
 
 ## Development
 
