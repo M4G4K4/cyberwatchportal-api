@@ -10,6 +10,14 @@ function userLoginRead(user, accessToken, refreshToken){
     }
 };
 
+function refreshToken(accessToken, refreshToken){
+    return {
+        refreshToken: refreshToken,
+        accessToken: accessToken
+    }
+}
+
 module.exports = {
-    userLoginRead
+    userLoginRead,
+    refreshToken
 }

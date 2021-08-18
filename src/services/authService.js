@@ -1,5 +1,5 @@
 const createError = require('http-errors');
-const { signToken, signRefreshToken } = require('../helpers/jwt/jwt_helper');
+const { signToken, signRefreshToken, verifyRefreshToken } = require('../helpers/jwt_helper');
 const authMapper = require('../mapper/AuthMapper');
 const User = require('../models/User');
 const Login = require('../models/Login');
@@ -59,8 +59,17 @@ async function saveLoginInfo(userId, email ,ip, userAgent, status){
     });
 }
 
+async function refresh(refreshDTO){
+  const userId = await verifyRefreshToken(refreshDTO.refreshToken);
+
+  const accessToken = await signToken(userId);
+  const refreshToken = await signRefreshToken(userId);
+
+  return authMapper.refreshToken(accessToken, refreshToken);
+}
+
 module.exports = {
   register,
   login,
-  saveLoginInfo
+  refresh
 };

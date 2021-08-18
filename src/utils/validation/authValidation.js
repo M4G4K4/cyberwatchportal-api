@@ -13,8 +13,13 @@ const authLoginSchema = Joi.object({
     password: Joi.string().min(8).required(),
 });
 
+const authRefreshSchema = Joi.object({
+    refreshToken: Joi.string().required()
+});
+
 
 module.exports = {
     authRegisterSchema,
-    authLoginSchema
+    authLoginSchema,
+    authRefreshSchema
 }
