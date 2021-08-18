@@ -6,7 +6,7 @@ module.exports = {
     const payload = {};
     const secret = process.env.ACCESS_TOKEN;
     const options = {
-      expiresIn: '5m',
+      expiresIn: '1y',
       issuer: 'https://github.com/m4g4k4', // change to domain
       audience: userId.toString(),
     };
