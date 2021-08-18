@@ -1,6 +1,8 @@
 # Cyber Watch Portal API
 
-API that contains all business logic ofthe cyber watch portal
+API that contains all business logic of the cyber watch portal.
+
+Cyber watch portal is an platform where studys, work or articles can be saved and shared with the IPVC community.
 
 ## Development
 
