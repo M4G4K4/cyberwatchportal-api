@@ -5,7 +5,7 @@ redis.get = util.promisify(redis.get);
 
 
 async function setValueWithExpiration(key, expiresIn, data){
-    await redis.set(key,data, 'EX', expiresIn);
+    await redis.set(key, data, 'EX', expiresIn);
 }
 
 async function setValueWithoutExpiration(key, data){
@@ -13,7 +13,7 @@ async function setValueWithoutExpiration(key, data){
 }
 
 async function setValueWith1DayExpiration(key, data){
-    await redis.set(key,data, 'EX', 86400);
+    await redis.set(key, data, 'EX', 86400);
 }
 
 async function getValue(key){
