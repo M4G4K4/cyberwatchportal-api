@@ -29,6 +29,10 @@ const Study = sequelize.define('Study', {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  tags: {
+    type: DataTypes.TEXT,
+    allowNull: true,
+  },
   user_id: {
     type: DataTypes.INTEGER,
     allowNull: false,

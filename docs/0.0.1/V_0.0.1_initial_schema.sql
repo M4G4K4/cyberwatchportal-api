@@ -23,6 +23,7 @@ CREATE TABLE study (
     long_description TEXT,
     picture TEXT,
     theme varchar(255) NOT NULL,
+    tags TEXT NULL,
     user_id INT NOT NULL,
     created_at TIMESTAMP,
     updated_at TIMESTAMP,
