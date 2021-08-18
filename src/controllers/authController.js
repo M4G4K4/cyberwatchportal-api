@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const authService = require('../services/authService');
-const { authRegisterSchema, authLoginSchema } = require('../utils/validation/authValidation');
+const { authRegisterSchema, authLoginSchema, authRefreshSchema } = require('../utils/validation/authValidation');
 
 router.post('/register', async (req, res, next) => {
     try{
@@ -31,5 +31,18 @@ router.post('/login', async (req, res, next) => {
         next(error)
     }
 });
+
+
+router.post('/refresh', async (req, res, next) => {
+    try {
+        const refreshDTO = await authRefreshSchema.validateAsync(req.body);
+
+        const result = await authService.refresh(refreshDTO);
+
+        res.send(result)
+    } catch (error) {
+        next(error)
+    }
+})
 
 module.exports = router;

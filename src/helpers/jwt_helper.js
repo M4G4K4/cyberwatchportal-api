@@ -39,9 +39,7 @@ module.exports = {
   },
 
   signRefreshToken: (userId) => new Promise((resolve, reject) => {
-    const payload = {
-
-    };
+    const payload = {};
     const secret = process.env.REFRESH_TOKEN;
     const options = {
       expiresIn: '1y',

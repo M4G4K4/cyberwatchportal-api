@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const { verifyToken } = require('../helpers/jwt/jwt_helper');
+const { verifyToken } = require('../helpers/jwt_helper');
 const { verifyRequests, requestLimiter } = require('../middlewares/requestValidation');
 
 
