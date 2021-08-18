@@ -1,7 +1,7 @@
 const router = require('express').Router();
 
-router.post('/me', async (req, res, next) => {
-
+router.get('/me', async (req, res, next) => {
+    res.send('User')
 });
 
 
