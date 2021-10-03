@@ -8,7 +8,7 @@ function userLoginRead(user, accessToken, refreshToken){
         accessToken: accessToken,
         refreshToken: refreshToken
     }
-};
+}
 
 function refreshToken(accessToken, refreshToken){
     return {

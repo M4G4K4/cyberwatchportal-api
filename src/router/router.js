@@ -5,7 +5,8 @@ const { verifyToken } = require('../helpers/jwt_helper');
 const { verifyRequests, requestLimiter } = require('../middlewares/requestValidation');
 
 
-router.use('/auth', requestLimiter ,require('../controllers/authController'));
+router.use('/auth', requestLimiter , require('../controllers/authController'));
 router.use('/user', verifyToken, verifyRequests, require('../controllers/userController'));
+router.use('/website', require('../controllers/websiteController'));
 
 module.exports = router;
