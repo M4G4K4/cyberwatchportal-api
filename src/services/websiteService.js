@@ -25,8 +25,25 @@ async function registerNewWebsite(newWebsite) {
 }
 
 async function getWebsiteScore(getScoreWebsite) {
-
     const websiteUrl = domain.getStrippedDomain(getScoreWebsite.url);
+
+    console.log(websiteUrl)
+
+    const website = await Website.findOne({
+        where: {
+            domain: websiteUrl
+        }
+    });
+
+    if (!website) {
+        throw createError.NotFound('Website not registered');
+    }
+    return websiteMapper.getWebsiteScoreRead(website);
+}
+
+async function getWebsiteInfo(getWebsiteInfo) {
+
+    const websiteUrl = domain.getStrippedDomain(getWebsiteInfo.url);
 
     const website = await Website.findOne({
         where: {
@@ -42,5 +59,6 @@ async function getWebsiteScore(getScoreWebsite) {
 
 module.exports = {
     registerNewWebsite,
-    getWebsiteScore
+    getWebsiteScore,
+    getWebsiteInfo
 };
