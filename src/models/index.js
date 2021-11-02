@@ -12,3 +12,6 @@ File.belongsTo(Study)
 
 Study.hasMany(Graph);
 Graph.belongsTo(Study);
+
+
+//TODO: Do the relations for the new tables
