@@ -32,7 +32,7 @@ router.post('/', async (req, res, next) => {
     }
 });
 
-router.get('/score', async (req, res, next) => {
+router.post('/score', async (req, res, next) => {
     try{
         const getScoreDTO = await websiteGetScoreSchema.validateAsync(req.body);
 
