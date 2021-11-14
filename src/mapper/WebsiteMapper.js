@@ -6,11 +6,11 @@ function getWebsiteScoreRead(website) {
     }
 }
 
-function getWebsiteScoreReadCached(domain, scoreInRedis) {
+function getWebsiteScoreReadCached(website) {
     return {
-        domain: domain,
-        score: scoreInRedis,
-        cached: true
+        id: website.id,
+        domain: website.domain,
+        score: website.score,
     }
 }
 

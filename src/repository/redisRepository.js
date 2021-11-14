@@ -13,11 +13,11 @@ async function setValueWithoutExpiration(key, data){
 }
 
 async function setValueWith1DayExpiration(key, data){
-    await redis.set(key, data, 'EX', 86400);
+    await redis.set(key, JSON.stringify(data), 'EX', 86400);
 }
 
 async function getValue(key){
-    return await redis.get(key);
+    return  JSON.parse(await redis.get(key));
 }
 
 
