@@ -5,11 +5,11 @@ const websiteMapper = require('../mapper/WebsiteMapper');
 const redisRepository = require('../repository/redisRepository');
 
 async function registerNewWebsite(newWebsite) {
-    const websiteUrl = domain.getStrippedDomain(newWebsite.url);
+    const websiteUrl = await domain.domainInfo(newWebsite.url);
 
     const website = await Website.findOne({
         where: {
-            domain: websiteUrl.url
+            domain: websiteUrl.hostname
         }
     });
 
@@ -25,9 +25,9 @@ async function registerNewWebsite(newWebsite) {
 }
 
 async function getWebsiteScore(websiteDto) {
-    const url = domain.getStrippedDomain(websiteDto.url);
+    const url = await domain.domainInfo(websiteDto.url);
 
-    const cache = await redisRepository.getValue(url);
+    const cache = await redisRepository.getValue(url.hostname);
 
     if(cache){
         return websiteMapper.getWebsiteScoreReadCached(cache);
@@ -35,11 +35,11 @@ async function getWebsiteScore(websiteDto) {
 
     const website = await Website.findOne({
         where: {
-            domain: url
+            domain: url.hostname
         }
     });
 
-    await redisRepository.setValueWith1DayExpiration(url, website);
+    await redisRepository.setValueWith1DayExpiration(url.hostname, website);
 
     if (!website) {
         throw createError.NotFound('Website not registered');

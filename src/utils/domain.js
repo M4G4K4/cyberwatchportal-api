@@ -1,18 +1,8 @@
 const dns = require('dns');
-const geoip = require('geoip-lite');
 
 dnsPromises = dns.promises;
 
-function getStrippedDomain(url) {
-    return url.replace("https://", "").replace("/", "");
-}
-
-async function getIpFromDomain(url) {
-    const strippedUrl = url.replace("https://", "").replace("/", "");
-    return await dnsPromises.lookup((strippedUrl));
-}
-
-function subDomain(url) {
+function isSubDomain(url) {
     url = url.replace(new RegExp(/^\s+/),""); // START
     url = url.replace(new RegExp(/\s+$/),""); // END
 
@@ -39,16 +29,18 @@ async function reverseLookup(ip) {
     return domains[0];
 }
 
-
-function getInfoFromIp(ip){
-    return geoip.lookup(ip);
+async function domainInfo(link){
+    let url = new URL(link);
+    return {
+        hostname: url.hostname,
+        pathname: url.pathname,
+        protocol: url.protocol.replace(':',''),
+        query_parameters: url.search
+    }
 }
 
-
 module.exports = {
-    getStrippedDomain,
-    getIpFromDomain,
-    subDomain,
+    domainInfo,
+    isSubDomain,
     reverseLookup,
-    getInfoFromIp
 }
