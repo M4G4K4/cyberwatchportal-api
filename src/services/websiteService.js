@@ -66,8 +66,19 @@ async function getWebsiteInfo(getWebsiteInfo) {
     return websiteMapper.getWebsiteScoreRead(website);
 }
 
+async function getWebsiteScoreById(id){
+    const website = await Website.findByPk(id);
+
+    if(!website){
+        throw createError.NotFound('Id not found');
+    }
+
+    return websiteMapper.getWebsiteScoreRead(website);
+}
+
 module.exports = {
     registerNewWebsite,
     getWebsiteScore,
-    getWebsiteInfo
+    getWebsiteInfo,
+    getWebsiteScoreById
 };
