@@ -1,5 +1,5 @@
 const createError = require('http-errors');
-const { signToken, signRefreshToken, verifyRefreshToken } = require('../helpers/jwt_helper');
+const { signToken, signRefreshToken, verifyRefreshToken } = require('../middlware/jwt_helper');
 const authMapper = require('../mapper/AuthMapper');
 const User = require('../models/User');
 const Login = require('../models/Login');
