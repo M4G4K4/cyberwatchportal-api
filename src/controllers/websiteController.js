@@ -32,5 +32,21 @@ router.get('/score/:websiteId', async (req, res, next) => {
     }
 })
 
+router.post('/report/phishing', async (req, res, next) => {
+    try{
+        const website = await websiteRegisterSchema.validateAsync(req.body);
+        
+        await websiteService.reportWebsitePhishing(website)
+
+        res.status(200);
+        
+    }catch (error){
+        if(error.isJoi === true){
+            error.status = 422;
+        }
+        next(error)
+    }
+});
+
 
 module.exports = router;

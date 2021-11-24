@@ -2,7 +2,8 @@ function getWebsiteScoreRead(website) {
     return {
         id: website.id,
         domain: website.domain,
-        score: website.score
+        score: website.score,
+        is_phishing: website.is_phishing === 'TRUE'
     }
 }
 

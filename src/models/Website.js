@@ -22,6 +22,12 @@ const Website = sequelize.define('Website', {
     },
     score: {
         type: DataTypes.STRING
+    },
+    is_phishing: {
+        type: DataTypes.STRING
+    },
+    reported_phishing: {
+        type: DataTypes.INTEGER
     }
 }, {
     tableName: 'website',

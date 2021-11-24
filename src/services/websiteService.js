@@ -3,26 +3,9 @@ const domain = require('../utils/domain');
 const Website = require('../models/Website');
 const websiteMapper = require('../mapper/WebsiteMapper');
 const redisRepository = require('../repository/redisRepository');
+const { timeDifference } = require('../utils/utils');
 
-async function registerNewWebsite(newWebsite) {
-    const websiteUrl = await domain.domainInfo(newWebsite.url);
 
-    const website = await Website.findOne({
-        where: {
-            domain: websiteUrl.hostname
-        }
-    });
-
-    if (website) {
-        throw createError.Conflict('Website already registered');
-    }
-
-    await Website.create({
-        domain: websiteUrl.url
-    });
-
-    return {};
-}
 
 async function getWebsiteScore(websiteDto) {
     const url = await domain.domainInfo(websiteDto.url);
@@ -39,13 +22,25 @@ async function getWebsiteScore(websiteDto) {
         }
     });
 
-    await redisRepository.setValueWith1DayExpiration(url.hostname, website);
+    if (website) {
+        //console.log(timeDifference(website.updated_at, new Date()));
+        /*
+        if(timeDifference(website.updated_at, new Date()) > 90){
+            // send event to execute anlysis of website again
+        }
+        */
 
-    if (!website) {
-        throw createError.NotFound('Website not registered');
+        await redisRepository.setValueWith1DayExpiration(url.hostname, website);
+
+        return websiteMapper.getWebsiteScoreRead(website);
+    }else{
+        const newWebsite = await Website.create({
+            full_domain: websiteDto.url,
+            domain: url.hostname,
+        });
+
+        return websiteMapper.getWebsiteScoreRead(newWebsite);
     }
-    
-    return websiteMapper.getWebsiteScoreRead(website);
 }
 
 async function getWebsiteScoreById(id){
@@ -61,13 +56,43 @@ async function getWebsiteScoreById(id){
         throw createError.NotFound('Website with id: ' + id + 'not found.');
     }
 
+
+    //console.log(timeDifference(website.updated_at, new Date()));
+    /*
+    if(timeDifference(website.updated_at, new Date()) > 90){
+        // send event to execute anlysis of website again
+    }
+    */
+
     await redisRepository.setValueWith1DayExpiration(website.id, website);
 
     return websiteMapper.getWebsiteScoreRead(website);
 }
 
+async function reportWebsitePhishing(websiteDto){
+    const url = await domain.domainInfo(websiteDto.url);
+
+    const website = await Website.findOne({
+        where: {
+            domain: url.hostname
+        }
+    });
+
+    if(!website){
+        throw createError.NotFound('Website ' + url + 'not found.');
+    }
+
+    website.reported_phishing += 1;
+
+    if(website.reported_phishing >= 5){
+        website.is_phishing = 'TRUE';
+    }
+
+    await website.save();
+}
+
 module.exports = {
-    registerNewWebsite,
     getWebsiteScore,
-    getWebsiteScoreById
+    getWebsiteScoreById,
+    reportWebsitePhishing
 };
