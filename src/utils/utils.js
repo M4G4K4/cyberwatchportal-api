@@ -1,11 +1,11 @@
-function timeDifference(date1,date2) {
-    var difference = date1.getTime() - date2.getTime();
+function timeDifference(date1, date2) {
+  const difference = date1.getTime() - date2.getTime();
 
-    var daysDifference = Math.floor(difference/1000/60/60/24);
+  const daysDifference = Math.floor(difference / 1000 / 60 / 60 / 24);
 
-    return daysDifference;    
+  return daysDifference;
 }
 
 module.exports = {
-    timeDifference,
-}
+  timeDifference,
+};

@@ -1,22 +1,31 @@
 const createError = require('http-errors');
-const { signToken, signRefreshToken, verifyRefreshToken } = require('../middlware/jwt_helper');
+const bcrypt = require('bcrypt');
+const { signToken, signRefreshToken, verifyRefreshToken } = require('../middleware/JWTHelper');
 const authMapper = require('../mapper/AuthMapper');
 const User = require('../models/User');
 const Login = require('../models/Login');
-const bcrypt = require('bcrypt');
 
+async function saveLoginInfo(userId, email, ip, userAgent, status) {
+  await Login.create({
+    user_id: userId,
+    ip,
+    email,
+    user_agent: userAgent,
+    status,
+  });
+}
 
-async function register (registerDTO){
-    const user = await User.findOne({
-      where: {
-        email: registerDTO.email
-      }
-    });
+async function register(registerDTO) {
+  const user = await User.findOne({
+    where: {
+      email: registerDTO.email,
+    },
+  });
 
-  if(user){
-    if(user.username === registerDTO.username){
+  if (user) {
+    if (user.username === registerDTO.username) {
       throw createError.Conflict('User with provided username already registered');
-    }else{
+    } else {
       throw createError.Conflict('User with provided email already registered');
     }
   }
@@ -26,15 +35,15 @@ async function register (registerDTO){
   return {};
 }
 
-async function login(loginDTO, ip, userAgent){
+async function login(loginDTO, ip, userAgent) {
   const user = await User.findOne({
-    where:{
-      email: loginDTO.email
-    }
+    where: {
+      email: loginDTO.email,
+    },
   });
 
-  if(user){
-    if(bcrypt.compare(loginDTO.password, user.dataValues.password)){
+  if (user) {
+    if (bcrypt.compare(loginDTO.password, user.dataValues.password)) {
       await saveLoginInfo(user.dataValues.id, user.dataValues.email, ip, userAgent, 'success');
 
       const accessToken = await signToken(user.dataValues.id);
@@ -42,24 +51,15 @@ async function login(loginDTO, ip, userAgent){
 
       return authMapper.userLoginRead(user, accessToken, refreshToken);
     }
-  }else {
+  } else {
     await saveLoginInfo(null, loginDTO.email, ip, userAgent, 'failed');
     throw createError.Unauthorized('Invalid credentials');
   }
-
+  return 200;
 }
 
-async function saveLoginInfo(userId, email ,ip, userAgent, status){
-    await Login.create({
-      user_id: userId,
-      ip: ip,
-      email: email,
-      user_agent: userAgent,
-      status: status
-    });
-}
 
-async function refresh(refreshDTO){
+async function refresh(refreshDTO) {
   const userId = await verifyRefreshToken(refreshDTO.refreshToken);
 
   const accessToken = await signToken(userId);
@@ -71,5 +71,5 @@ async function refresh(refreshDTO){
 module.exports = {
   register,
   login,
-  refresh
+  refresh,
 };

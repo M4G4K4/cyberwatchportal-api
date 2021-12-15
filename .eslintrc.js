@@ -2,7 +2,7 @@ module.exports = {
   env: {
     browser: true,
     es2021: true,
-    jest: true
+    jest: true,
   },
   extends: [
     'airbnb-base',
@@ -16,8 +16,8 @@ module.exports = {
   settings: {
     'import/resolver': {
       node: {
-        extensions: [".js", ".jsx", ".ts", ".tsx"]
-      }
-    }
-  }
+        extensions: ['.js', '.jsx', '.ts', '.tsx'],
+      },
+    },
+  },
 };

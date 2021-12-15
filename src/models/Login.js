@@ -5,7 +5,7 @@ const Login = sequelize.define('Login', {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
-    autoIncrement: true
+    autoIncrement: true,
   },
   ip: {
     type: DataTypes.STRING,

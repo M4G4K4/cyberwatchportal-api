@@ -8,10 +8,9 @@ User.hasMany(Study);
 Study.belongsTo(User);
 
 Study.hasMany(File);
-File.belongsTo(Study)
+File.belongsTo(Study);
 
 Study.hasMany(Graph);
 Graph.belongsTo(Study);
 
-
-//TODO: Do the relations for the new tables
+// TODO: Do the relations for the new tables

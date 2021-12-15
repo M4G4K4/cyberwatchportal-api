@@ -1,12 +1,12 @@
 const { DataTypes } = require('sequelize');
-const sequelize = require('../config/databaseConnection');
 const bcrypt = require('bcrypt');
+const sequelize = require('../config/databaseConnection');
 
 const User = sequelize.define('User', {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
-    autoIncrement: true
+    autoIncrement: true,
   },
   first_name: {
     type: DataTypes.STRING,
@@ -41,7 +41,7 @@ const User = sequelize.define('User', {
   requests: {
     type: DataTypes.INTEGER,
     allowNull: false,
-    defaultValue: 25
+    defaultValue: 25,
   },
   permissions: {
     type: DataTypes.TEXT,
@@ -51,13 +51,13 @@ const User = sequelize.define('User', {
     type: DataTypes.STRING,
     allowNull: true,
     values: ['active', 'inactive', 'banned'],
-    defaultValue: 'active'
+    defaultValue: 'active',
   },
   verified: {
     type: DataTypes.STRING,
     allowNull: true,
     values: ['verified', 'unverified'],
-    defaultValue: 'verified'
+    defaultValue: 'verified',
   },
 }, {
   tableName: 'users',
@@ -69,6 +69,5 @@ User.beforeCreate(async (user, options) => {
   const salt = await bcrypt.genSalt(10);
   user.password = await bcrypt.hashSync(user.password, salt);
 });
-
 
 module.exports = User;
