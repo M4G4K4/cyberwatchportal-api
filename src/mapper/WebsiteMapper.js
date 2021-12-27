@@ -12,6 +12,7 @@ function getWebsiteScoreReadCached(website) {
     id: website.id,
     domain: website.domain,
     score: website.score,
+    is_phishing: website.is_phishing === 'TRUE',
   };
 }
 

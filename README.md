@@ -1,8 +1,8 @@
 # Cyber Watch Portal API
 
-API that contains all business logic of the cyber watch portal.
+API that contains all business logic of the cyber watch.
 
-Cyber watch portal is an platform where studys, work or articles can be saved and shared with the IPVC community.
+Cyber watch is a platform that automatacly assess website security, and represent it in a easy to read score to every user make their decision to trust or not on the website.
 
 ## Development
 
@@ -41,4 +41,4 @@ npm run coverage
 
 ## API Documentation
 
-Postman collection: https://documenter.getpostman.com/view/9285303/TzskEiKa
+Postman collection: https://documenter.getpostman.com/view/9285303/UVR8o7Q7

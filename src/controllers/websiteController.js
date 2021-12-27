@@ -38,7 +38,7 @@ router.post('/report/phishing', async (req, res, next) => {
 
     await websiteService.reportWebsitePhishing(website);
 
-    res.status(200);
+    res.status(200).send();
   } catch (error) {
     if (error.isJoi === true) {
       error.status = 422;

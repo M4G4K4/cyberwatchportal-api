@@ -1,6 +1,6 @@
 const dns = require('dns');
 
-dnsPromises = dns.promises;
+const dnsPromises = dns.promises;
 
 function isSubDomain(url) {
   url = url.replace(new RegExp(/^\s+/), ''); // START

@@ -1,3 +1,4 @@
+const { func } = require('joi');
 const util = require('util');
 const redis = require('../config/redisConnection');
 
@@ -17,6 +18,10 @@ async function setValueWith1DayExpiration(key, data) {
 
 async function getValue(key) {
   return JSON.parse(await redis.get(key));
+}
+
+async function invalidateCache(key){
+  await redis.DEL(key); 
 }
 
 module.exports = {

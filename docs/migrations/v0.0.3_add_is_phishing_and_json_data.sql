@@ -41,7 +41,7 @@ CREATE TABLE website
     category    varchar(255) NULL,
     score       varchar(255) NULL,
     is_phishing varchar(255) DEFAULT 'FALSE',
-    reported_phishing INTEGER,
+    reported_phishing INTEGER DEFAULT 0,
     data json NULL,
     status varchar(255) NULL,
     created_at  TIMESTAMP,

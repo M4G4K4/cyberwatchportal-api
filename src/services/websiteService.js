@@ -32,6 +32,7 @@ async function getWebsiteScore(websiteDto) {
 
     return websiteMapper.getWebsiteScoreRead(website);
   }
+
   const newWebsite = await Website.create({
     full_domain: websiteDto.url,
     domain: url.hostname,
@@ -41,26 +42,15 @@ async function getWebsiteScore(websiteDto) {
 }
 
 async function getWebsiteScoreById(id) {
-  const websiteCache = await redisRepository.getValue(id);
-
-  if (websiteCache) {
-    return websiteMapper.getWebsiteScoreReadCached(websiteCache);
-  }
-
   const website = await Website.findByPk(id);
 
   if (!website) {
     throw createError.NotFound(`Website with id: ${id}not found.`);
   }
 
-  // console.log(timeDifference(website.updated_at, new Date()));
-  /*
-    if(timeDifference(website.updated_at, new Date()) > 90){
-        // send event to execute anlysis of website again
-    }
-    */
+  const url = await domain.domainInfo(website.full_domain);
 
-  await redisRepository.setValueWith1DayExpiration(website.id, website);
+  await redisRepository.setValueWith1DayExpiration(url.hostname, website);
 
   return websiteMapper.getWebsiteScoreRead(website);
 }
@@ -76,15 +66,19 @@ async function reportWebsitePhishing(websiteDto) {
 
   if (!website) {
     throw createError.NotFound(`Website ${url}not found.`);
+    console.error('Website not found');
   }
 
   website.reported_phishing += 1;
 
-  if (website.reported_phishing >= 5) {
+  if (website.reported_phishing >= 5 && website.is_phishing === 'FALSE') {
     website.is_phishing = 'TRUE';
+    // TODO: Do something to the score
   }
 
   await website.save();
+
+  return {};
 }
 
 module.exports = {
