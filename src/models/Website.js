@@ -28,6 +28,12 @@ const Website = sequelize.define('Website', {
   reported_phishing: {
     type: DataTypes.INTEGER,
   },
+  data: {
+    type: DataTypes.JSONB,
+  },
+  status: {
+    type: DataTypes.STRING,
+  }
 }, {
   tableName: 'website',
   timestamps: true,
