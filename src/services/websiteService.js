@@ -4,6 +4,7 @@ const Website = require('../models/Website');
 const websiteMapper = require('../mapper/WebsiteMapper');
 const redisRepository = require('../repository/redisRepository');
 const { timeDifference } = require('../utils/utils');
+const rabbit = require('./rabbitmqService');
 
 async function getWebsiteScore(websiteDto) {
   const url = await domain.domainInfo(websiteDto.url);
@@ -21,24 +22,19 @@ async function getWebsiteScore(websiteDto) {
   });
 
   if (website) {
-    // console.log(timeDifference(website.updated_at, new Date()));
-    /*
-        if(timeDifference(website.updated_at, new Date()) > 90){
-            // send event to execute anlysis of website again
-        }
-        */
-
     await redisRepository.setValueWith1DayExpiration(url.hostname, website);
 
     return websiteMapper.getWebsiteScoreRead(website);
+  }else {
+
+    const dataSend = {
+      url: websiteDto.url
+    }
+  
+    rabbit.send(dataSend);
+  
+    return websiteMapper.noWebsiteFound();
   }
-
-  const newWebsite = await Website.create({
-    full_domain: websiteDto.url,
-    domain: url.hostname,
-  });
-
-  return websiteMapper.getWebsiteScoreRead(newWebsite);
 }
 
 async function getWebsiteScoreById(id) {

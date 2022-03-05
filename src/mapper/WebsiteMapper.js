@@ -1,3 +1,4 @@
+
 function getWebsiteScoreRead(website) {
   return {
     id: website.id,
@@ -16,7 +17,14 @@ function getWebsiteScoreReadCached(website) {
   };
 }
 
+function noWebsiteFound(){
+  return {
+    message: 'Website not existing, will be analyzed'
+  }
+}
+
 module.exports = {
   getWebsiteScoreRead,
   getWebsiteScoreReadCached,
+  noWebsiteFound
 };
