@@ -17,12 +17,12 @@ async function getWebsiteScore(websiteDto) {
 
   const website = await Website.findOne({
     where: {
-      domain: url.hostname,
+      full_domain: websiteDto.url,
     },
   });
 
-  if (website) {
-    await redisRepository.setValueWith1DayExpiration(url.hostname, website);
+  if (website && website.data != null && website.score != null) {
+    //await redisRepository.setValueWith1DayExpiration(url.hostname, website);
 
     return websiteMapper.getWebsiteScoreRead(website);
   }else {
@@ -30,8 +30,14 @@ async function getWebsiteScore(websiteDto) {
     const dataSend = {
       url: websiteDto.url
     }
+
+    if(website == null){
+      await Website.create({
+        full_domain: websiteDto.url
+      });
+    }
   
-    rabbit.send(dataSend);
+    await rabbit.send(dataSend);
   
     return websiteMapper.noWebsiteFound();
   }

@@ -33,9 +33,9 @@ CREATE TABLE login
 CREATE TABLE website
 (
     id          SERIAL       NOT NULL,
-    name     varchar(255) NOT NULL,
-    domain    varchar(255) NOT NULL,
-    full_domain varchar(255) NOT NULL,
+    name     varchar(255) NULL,
+    domain    varchar(255) NULL,
+    full_domain varchar(255) NULL,
     category    varchar(255) NULL,
     score       varchar(255) NULL,
     is_phishing varchar(255) DEFAULT 'FALSE',
