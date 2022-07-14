@@ -25,7 +25,7 @@
     "http-errors": "^1.7.2",
     "joi": "^17.4.2",
     "jsonwebtoken": "^8.5.1",
-    "moment": "^2.29.2",
+    "moment": "^2.29.4",
     "pg": "^8.7.1",
     "pg-hstore": "^2.3.4",
     "redis": "^3.1.2",
